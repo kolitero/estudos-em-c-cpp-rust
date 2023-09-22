@@ -2,7 +2,6 @@
 
 using namespace std;
 
-
 class  ScreenInit{
     public:
         char x;
@@ -23,17 +22,38 @@ class  ScreenInit{
         if(x == '0'){
             //chamar player vs player
         }else if(x == '1'){
-            //chamar player vs Cpu
+            playerVscpu();
         }else{
             exit(0);
         }
+    }
+    void playerVscpu(){
+        VelhaCPU velha;
+        bool x = true;
+        int linha,coluna;
+        velha.setPlayer1('O');
+        while(x){
+            cin >> linha;
+            cin >> coluna;
+            velha.play(velha.getPlayer(),linha,coluna);
+            velha.draw();
+            cout << velha.check() << endl;
+            if(velha.check() != 32){
+                break;
+            }
+            velha.playIa();
+            velha.draw();
+            cout << velha.check() << endl;
+            if(velha.check() != 32){
+                break;
+            }
+        }
+        velha.draw();
     }
 };
 
 int main(){
     ScreenInit inicio;
     inicio.screen();
-    Velha velha;
-    velha.draw();
     return 0;
 }
