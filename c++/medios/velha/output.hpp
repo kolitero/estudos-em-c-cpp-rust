@@ -8,4 +8,4 @@ std::string printLeft(std::string content);
 #define STRINGLENGT 51
 
 // cores
-#define MAGEN "\x1B[34m"
+#define BLUE "\x1B[34m"
