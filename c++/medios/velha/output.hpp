@@ -9,3 +9,5 @@ std::string printLeft(std::string content);
 
 // cores
 #define BLUE "\x1B[34m"
+#define GREEN "\x1B[32m"
+#define RED "\x1B[31m"

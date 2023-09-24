@@ -22,34 +22,88 @@ class  ScreenInit{
         if(x == '0'){
             //chamar player vs player
         }else if(x == '1'){
-            playerVscpu();
+            playerVsCPU();
         }else{
             exit(0);
         }
     }
-    void playerVscpu(){
-        VelhaCPU velha;
-        bool x = true;
-        int linha,coluna;
-        velha.setPlayer1('O');
-        while(x){
-            cin >> linha;
-            cin >> coluna;
-            velha.play(velha.getPlayer(),linha,coluna);
+   void printChoice(){
+    system("clear");
+    cout << LINE << endl;
+    cout << printComplete("qual voce escolhe? ") << endl << LINE << endl;
+    cout << printLeft("[X]") << endl;
+    cout << printLeft("[O]") << endl << LINE << endl << '|';
+   }
+   void choiceVsPlayer(VelhaPXP *velha){
+    char symbol;
+    do{
+    printChoice();
+    cin >> symbol;
+    }while(!(velha->setPlayer1(symbol)));
+    do{
+    printChoice();
+    cin >> symbol;
+    }while(!(velha->setPlayer1(symbol)));
+   }
+   void choiceVsCpu(VelhaCPU *velha){
+    char symbol;
+    do{
+    printChoice();
+    cin >> symbol;
+    }while(!(velha->setPlayer1(symbol)));
+   }
+   void cont(){
+    char a;
+    cout << printLeft("espere para conrinuar:") << endl;
+    system("sleep 3");
+    system("clear");
+   }
+   void playCPU(VelhaCPU *velha){
+    int linha,coluna;
+    do{
+        cont();
+        velha->draw();
+        cin >> linha;
+        cin >> coluna;
+    }
+    while(!velha->play(velha->getPlayer(),linha,coluna));
+   }
+   void playerVsCPU(){
+    VelhaCPU velha;
+    int linha,coluna;
+    cout << GREEN;
+    choiceVsCpu(&velha);
+    velha.draw();
+    if(velha.getCPU() == 'X'){
+        do{
+            cont();
+            velha.playIa();
             velha.draw();
-            cout << velha.check() << endl;
-            if(velha.check() != 32){
+            if(velha.check() != 32 || velha.getPlays() == 9){
+                break;
+            }
+            playCPU(&velha);
+            cont();
+            velha.draw();
+        }while(velha.check() == 32  && velha.getPlays() != 9);
+
+    }
+    else if(velha.getPlayer() == 'X'){
+        do{
+            playCPU(&velha);
+            cont();
+            velha.draw();
+            cont();
+            if(velha.check() != 32 || velha.getPlays() == 9){
                 break;
             }
             velha.playIa();
             velha.draw();
-            cout << velha.check() << endl;
-            if(velha.check() != 32){
-                break;
-            }
-        }
-        velha.draw();
+        }while(velha.check() == 32 && velha.getPlays() != 9);
     }
+    velha.draw();
+    cout << velha.check();
+   }
 };
 
 int main(){

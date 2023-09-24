@@ -7,18 +7,22 @@ class Velha
 protected:
     enum symbols{trash = ' ',circle = 'O',x = 'X'};
     symbols array[3][3];
-    int jogadas;
+    int plays;
     void resetGame(){
         for(int x = 0;x<3;x++){
             for(int y = 0;y<3;y++)
                 array[x][y] = trash;
         }
-        jogadas = 0;
+        plays = 0;
     }
 public:
-    void play(symbols player,int l,int c){
+    bool play(symbols player,int l,int c){
+        if(array[l][c] == trash){
             array[l][c] = player;
-            jogadas++;
+            plays++;
+            return 1;
+        }
+        return 0;
         }
     void draw(){
         //std::system("clear");
@@ -36,6 +40,9 @@ public:
         }
         std::cout << LINE << '\n';
     }
+    int getPlays(){
+        return plays;
+    }
     Velha(){
         resetGame();
     }
@@ -43,18 +50,22 @@ public:
     symbols check(){
         for(int x = 0;x<3;x++){
             if(array[x][0] == array[x][1] && array[x][1] == array[x][2] && array[x][0] != trash){
+                std::cout << "s";
                 return array[x][0];
             }
         }
         for(int x = 0;x<3;x++){
             if(array[0][x] == array[1][x] && array[1][x] == array[2][x] && array[0][x] != trash){
+                std::cout << "d";
                 return array[x][0];
             }
         }
         if(array[0][0] == array[1][1] && array[1][1] == array[2][2] && array[1][1] != trash){
+            std::cout << "p";
             return array[1][1];
         }
         if(array[0][2] == array[1][1] && array[1][1] == array[2][0]  && array[1][1] != trash){
+            std::cout << "n";
             return array[1][1];
         }
         return trash;
@@ -176,7 +187,7 @@ class VelhaCPU : public Velha{
             return cpu;
         }
         int playIa(){
-            if(jogadas == 0 || jogadas == 1){
+            if(plays == 0 || plays == 1){
                 playFirstIa();
                 return 1;
             }
@@ -212,7 +223,7 @@ class VelhaPXP : public Velha{
             return player1;
         }
         symbols getPlayer2(){
-            return player1;
+            return player2;
         }
         bool setPlayer1(char n){
             if(n == circle && n != player2){
