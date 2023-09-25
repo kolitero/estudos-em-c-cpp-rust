@@ -1,10 +1,8 @@
 #include "output.hpp"
 
-using namespace std;
-
-string printComplete(string content){
+std::string printComplete(std::string content){
     int x;
-    string result;
+    std::string result;
     x = content.size();
     result.append("|");
     for(int i = 1;i<50/2-x/2;i++){
@@ -18,9 +16,9 @@ string printComplete(string content){
     return result;
 }
 
-string printLeft(string content){
+std::string printLeft(std::string content){
     int x;
-    string result;
+    std::string result;
     x = content.size();
     result.append("|");
     result.append(content);

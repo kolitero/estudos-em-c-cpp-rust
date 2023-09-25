@@ -1,6 +1,9 @@
 #include "output.hpp"
 
-//clase base para VelhaPXP e VelhaCPU
+//linha
+const char* LINE = "==================================================";
+
+//clase pai para VelhaPXP e VelhaCPU
 
 class Velha
 {
@@ -144,7 +147,7 @@ class VelhaCPU : public Velha{
             }
             return 0;
         }
-        //primeira jogada da  
+        //primeira jogada da  IA?
         int playFirstIa(){
             int p;
             int opt[4][2] {{0,0},{0,2},{2,0},{2,0}};
