@@ -4,13 +4,14 @@
 const char* LINE = "==================================================";
 
 //clase pai para VelhaPXP e VelhaCPU
-
 class Velha
 {
 protected:
+    //enum onde esta os simbolos aceitos no jogo da velha
     enum symbols{trash = ' ',circle = 'O',x = 'X'};
     symbols array[3][3];
     int plays;
+    //iniciar as variaveis com seus valores inicias para comeca um jogo
     void resetGame(){
         for(int x = 0;x<3;x++){
             for(int y = 0;y<3;y++)
@@ -19,6 +20,7 @@ protected:
         plays = 0;
     }
 public:
+    //mudar o valor da posicao da matriz se ela for trash
     bool play(symbols player,int l,int c){
         if(array[l][c] == trash){
             array[l][c] = player;
@@ -27,8 +29,8 @@ public:
         }
         return 0;
         }
+    //desenhar o jogo
     void draw(){
-        //std::system("clear");
         std::cout << LINE << '\n';
         std::cout << printLeft("colunas:             0|1|2") << '\n';
         for(int x = 0;x<3;x++){
@@ -46,6 +48,7 @@ public:
     int getPlays(){
         return plays;
     }
+    // construtor padrao
     Velha(){
         resetGame();
     }
@@ -53,22 +56,18 @@ public:
     symbols check(){
         for(int x = 0;x<3;x++){
             if(array[x][0] == array[x][1] && array[x][1] == array[x][2] && array[x][0] != trash){
-                std::cout << "s";
                 return array[x][0];
             }
         }
         for(int x = 0;x<3;x++){
             if(array[0][x] == array[1][x] && array[1][x] == array[2][x] && array[0][x] != trash){
-                std::cout << "d";
                 return array[x][0];
             }
         }
         if(array[0][0] == array[1][1] && array[1][1] == array[2][2] && array[1][1] != trash){
-            std::cout << "p";
             return array[1][1];
         }
         if(array[0][2] == array[1][1] && array[1][1] == array[2][0]  && array[1][1] != trash){
-            std::cout << "n";
             return array[1][1];
         }
         return trash;
@@ -147,7 +146,7 @@ class VelhaCPU : public Velha{
             }
             return 0;
         }
-        //primeira jogada da  IA?
+        //primeira jogada da IA
         int playFirstIa(){
             int p;
             int opt[4][2] {{0,0},{0,2},{2,0},{2,0}};
@@ -159,6 +158,7 @@ class VelhaCPU : public Velha{
                 }
             }
         }
+        //joga em um lugar aleatorio com cpu
         int playRand(){
             int p;
             int opt[9][2] {{0,0},{0,1},{0,2},{1,0},{1,1},{1,2},{2,0},{2,1},{2,2}};
@@ -171,6 +171,7 @@ class VelhaCPU : public Velha{
             }
         }
     public:
+        // atribuir um valor para player e automaticamente para cpu  
         bool setPlayer1(char n){
             if(n == circle && n != cpu){
                 player = circle;
@@ -189,6 +190,7 @@ class VelhaCPU : public Velha{
         symbols getCPU(){
             return cpu;
         }
+        //onde decide como a cpu vai joga
         int playIa(){
             if(plays == 0 || plays == 1){
                 playFirstIa();

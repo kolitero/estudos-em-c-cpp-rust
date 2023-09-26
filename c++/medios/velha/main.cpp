@@ -5,6 +5,7 @@ const char* BLUE =  "\x1B[34m";
 const char* GREEN = "\x1B[32m";
 const char* RED  = "\x1B[31m";
 
+// o programa principal
 class  ScreenInit{
     public:
         char x;
@@ -41,7 +42,7 @@ class  ScreenInit{
     std::cout << printLeft("[X]") << '\n';
     std::cout << printLeft("[O]") << '\n' << LINE << '\n' << '|';
    }
-   //escolher os simbolos do player 1 e 
+   //escolher os simbolos do player 1 e player2
    void choiceVsPlayer(VelhaPXP *velha){
     char symbol;
     do{
@@ -57,6 +58,7 @@ class  ScreenInit{
     cont();
     }while(!(velha->setPlayer2(symbol)));
    }
+   //escolhe o simbolo de player no modo player vs cpu
    void choiceVsCpu(VelhaCPU *velha){
     char symbol;
     do{
@@ -64,12 +66,14 @@ class  ScreenInit{
     std::cin >> symbol;
     }while(!(velha->setPlayer1(symbol)));
    }
+   //uma especie de loading
    void cont(){
     char a;
     std::cout << printLeft("espere para conrinuar:") << '\n';
     system("sleep 3");
     system("clear");
    }
+   //onde o player de player vs cpu escolhe onde vai marcar com o simbolo
    void playCPU(VelhaCPU *velha){
     int linha,coluna;
     do{
@@ -82,6 +86,7 @@ class  ScreenInit{
     }
     while(!velha->play(velha->getPlayer(),linha,coluna));
    }
+    //onde o player1 de player vs players escolhe onde vai marcar com o simbolo
    void playPlayer1(VelhaPXP *velha){
     int linha,coluna;
     do{
@@ -96,6 +101,7 @@ class  ScreenInit{
     }
     while(!velha->play(velha->getPlayer1(),linha,coluna));
    }
+    //onde o player2 de player vs players escolhe onde vai marcar com o simbolo
    void playPlayer2(VelhaPXP *velha){
     int linha,coluna;
     do{
@@ -110,14 +116,16 @@ class  ScreenInit{
     }
     while(!velha->play(velha->getPlayer2(),linha,coluna));
    }
+    //funcao onde ocorre o player vs cpu
    void playerVsCPU(){
     VelhaCPU velha;
     int linha,coluna;
     std::cout << GREEN;
     choiceVsCpu(&velha);
-    velha.draw();
     if(velha.getCPU() == 'X'){
         do{
+            cont();
+            velha.draw();
             cont();
             velha.playIa();
             velha.draw();
@@ -128,7 +136,7 @@ class  ScreenInit{
             cont();
             velha.draw();
         }while(velha.check() == 32  && velha.getPlays() != 9);
-
+        cont();
     }
     else if(velha.getPlayer() == 'X'){
         do{
@@ -142,10 +150,12 @@ class  ScreenInit{
             velha.playIa();
             velha.draw();
         }while(velha.check() == 32 && velha.getPlays() != 9);
+        cont();
     }
     velha.draw();
     std::cout << velha.check();
    }
+   //funcao onde ocorre player vs player
    void playerXP(){
     printChoice();
     VelhaPXP velha;
@@ -175,6 +185,8 @@ class  ScreenInit{
    }
 };
 
+
+// funcao main do programa
 int main(){
     ScreenInit inicio;
     inicio.screen();
